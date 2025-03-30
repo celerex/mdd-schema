@@ -1,0 +1,91 @@
+# Numeric Values
+
+## Integers
+
+integer:
++ extends: string
++ pattern: [0-9]+
++ comment: an arbitrarily large integer value
+
+byte:
++ extends: integer
++ minInclusive: -128
++ maxInclusive: 127
++ comment: an 8 bit signed integer value
+
+short:
++ extends: integer
++ minInclusive: -32768
++ maxInclusive: 32767
++ comment: a 16 bit signed integer value
+
+int:
++ extends: integer
++ minInclusive: -2147483648
++ maxInclusive: 2147483647
++ comment: a 32 bit signed integer value
+
+long:
++ extends: integer
++ minInclusive: -9223372036854775808
++ maxInclusive: 9223372036854775807
++ comment: a 64 bit signed integer value
+
+## Decimals
+
+decimal:
++ extends: string
++ pattern: [0-9]+|[0-9]+\.[0-9]*|[0-9]e[+-]{1}[0-9]
++ comment: decimal number with arbitrary precision
+
+float:
++ extends: decimal
++ comment: a 32 bit floating point value
+
+double:
++ extends: decimal
++ comment: a 64 bit floating point value
+
+# Time
+
+dateTime:
++ extends: string
++ pattern: [0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+}|)(Z|[+-]{1}[0-9]{2}:[0-9]{2}|)
++ comment: A point in time with optional fractional seconds
+
+date:
++ extends: string
++ pattern: [0-9]{4}-[0-9]{2}-[0-9]{2}
+
+time:
++ extends: string
++ pattern: [0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+}|)(Z|[+-]{1}[0-9]{2}:[0-9]{2}|)
+
+year:
++ extends: string
++ pattern: [0-9]{4}
+
+duration:
++ extends: string
++ pattern: ^-?P(?!$)(\d+Y)?(\d+M)?(\d+D)?(T(?!$)(\d+H)?(\d+M)?(\d+(\.\d+)?S)?)?$
+
+# Misc
+
+boolean:
++ extends: string
++ enumeration:
+	- true
+	- false
+
+uri:
++ extends: string
+
+uuid:
++ extends: string
++ pattern: [0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32}
++ comment: contains a universally unique identifier
+
+binary:
++ extends: string
++ pattern: (?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?
++ comment: contains base64 encoded binary content

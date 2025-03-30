@@ -1,0 +1,9 @@
+# A basic example
+
++ namespace: local.mdd-schema.test
+
+company:
+* name: string
+* vat:
+	+ type: string
+	+ pattern: BE[0-9]{10}
