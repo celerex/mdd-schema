@@ -2,8 +2,27 @@
 
 + namespace: local.mdd-schema.test
 
-company:
+## company:
+
 * name: string
 * vat:
 	+ type: string
 	+ pattern: BE[0-9]{10}
+	
+## contract:
+
+* id:
+	+ type: string
+	+ primaryKey: true
+* signed:
+	+ type: dateTime
+	+ timezone: UTC
+
+## companyWithContracts:
+
++ extends: local.mdd-schema.test.company
+* signatory: string
+* contracts:
+	+ type: local.mdd-schema.test.contract
+	+ minOccurs: 0
+	+ maxOccurs: 0

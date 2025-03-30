@@ -3,6 +3,9 @@ package be.celerex.mdd.schema.core;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 import be.celerex.mdd.core.MDDSyntaxException;
 import be.nabu.libs.types.api.ComplexContent;
@@ -23,6 +26,21 @@ public class MDDSchemaParserTest extends TestCase {
 		
 		assertEquals(
 			"{\"name\": \"Test Company\", \"vat\": \"BE0123456789\"}",
+			jsonify
+		);
+		
+		company = typeRegistry.getComplexType("local.mdd-schema.test", "companyWithContracts").newInstance();
+		ComplexContent contract = typeRegistry.getComplexType("local.mdd-schema.test", "contract").newInstance();
+		contract.set("id", UUID.fromString("f81d4fae-7dec-11d0-a765-00a0c91e6bf6"));
+		contract.set("signed", new Date(1743355417767l));
+		company.set("contracts[0]", contract);
+		company.set("name", "Test Company");
+		company.set("vat", "BE0123456789");
+		company.set("signatory", "bob");
+		
+		jsonify = jsonify(company, false);
+		assertEquals(
+			"{\"name\": \"Test Company\", \"vat\": \"BE0123456789\", \"signatory\": \"bob\", \"contracts\": [{\"id\": \"f81d4fae7dec11d0a76500a0c91e6bf6\", \"signed\": \"2025-03-30T19:23:37.767+02:00\"}]}",
 			jsonify
 		);
 	}
